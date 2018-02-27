@@ -6,3 +6,4 @@ University: [SUPSI](https://supsi.ch/dti)
 ## Courses covered by these notebooks
 - M02056.2 - C02045.2 Programmazione Concorrente e Parallela
 - C01013.5 - Dinamica e stabilità
+- M02037 - C02048 Telematica, crittografia e sicurezza informatica
