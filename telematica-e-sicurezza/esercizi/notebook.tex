@@ -141,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{serie-9}
+    \title{esercizi-2}
     
     
     
@@ -280,99 +280,116 @@
     
 
     
-    \hypertarget{serie-9}{%
-\section{Serie 9}\label{serie-9}}
+    \hypertarget{esercizi-2}{%
+\section{Esercizi 2}\label{esercizi-2}}
 
-    \hypertarget{esercizio-1}{%
-\subsection{Esercizio 1}\label{esercizio-1}}
+    \hypertarget{commentare}{%
+\subsection{Commentare}\label{commentare}}
 
-\hypertarget{yield}{%
-\subsubsection{Yield}\label{yield}}
+    \begin{verbatim}
+00 a0 c5 2c 6b b7 00 00 0c 31 98 92 08 00 45 00
+00 28 01 17 40 00 7e 06 c0 84 c0 a8 02 03 3f fb
+38 8e 05 2b 00 50 00 03 24 d6 85 e3 8c 4e 50 10
+22 38 15 e2 00 00 55 53 45 52 20 61
+\end{verbatim}
 
-Dando la precedenza ad altri thread nel ciclo for di \texttt{thread2}
-possiamo rendere l'output più verboso in quanto non sprechiamo tutto il
-tempo della CPU all'interno del ciclo for, per poi settare la variabile
-\texttt{finished} a \texttt{true}.
+    \hypertarget{ethertype-cheatsheet}{%
+\paragraph{EtherType CheatSheet}\label{ethertype-cheatsheet}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{final} \BuiltInTok{Thread}\NormalTok{ thread2 = }\KeywordTok{new} \BuiltInTok{Thread}\NormalTok{(() -> \{}
-\NormalTok{    cdl.}\FunctionTok{countDown}\NormalTok{();}
-    \KeywordTok{try}\NormalTok{ \{}
-\NormalTok{        cdl.}\FunctionTok{await}\NormalTok{();}
-\NormalTok{    \} }\KeywordTok{catch}\NormalTok{ (}\DataTypeTok{final} \BuiltInTok{InterruptedException}\NormalTok{ e) \{}
-\NormalTok{        e.}\FunctionTok{printStackTrace}\NormalTok{();}
-\NormalTok{    \}}
-    \KeywordTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{1}\NormalTok{; i <= }\DecValTok{50000}\NormalTok{; i++) \{}
-\NormalTok{        S9Esercizio1.}\FunctionTok{sum}\NormalTok{ = i;}
-        \BuiltInTok{Thread}\NormalTok{.}\FunctionTok{yield}\NormalTok{();}
-\NormalTok{    \}}
-\NormalTok{    S9Esercizio1.}\FunctionTok{finished}\NormalTok{ = }\KeywordTok{true}\NormalTok{;}
-    \BuiltInTok{System}\NormalTok{.}\FunctionTok{out}\NormalTok{.}\FunctionTok{println}\NormalTok{(}\StringTok{"cnt "}\NormalTok{ + S9Esercizio1.}\FunctionTok{cnt}\NormalTok{);}
-\NormalTok{\});}
-\end{Highlighting}
-\end{Shaded}
+\texttt{0x0800} IP, \texttt{0x0806} ARP\\
+For more EtherType values, check
+\href{https://en.wikipedia.org/wiki/EtherType\#Examples}{its relative
+Wikipedia section}
 
-\hypertarget{thread-priority}{%
-\subsubsection{Thread Priority}\label{thread-priority}}
+\hypertarget{packet-analysis}{%
+\subsubsection{Packet Analysis}\label{packet-analysis}}
 
-Impostando una priorità più elevata al thread della somma (thread 1) ed
-una inferiore a quello del count (thread 2) possiamo avere un output più
-verboso.
+{00 a0 c5 2c 6b b7} {00 00 0c 31 98 92 } {08 00} {45 00\\
+00 28 01 17 40 00 7e 06 c0 84 c0 a8 02 03 3f fb\\
+38 8e 05 2b 00 50 00 03 24 d6 85 e3 8c 4e 50 10\\
+22 38 15 e2 00 00 55 53} {45 52 20 61}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{final} \BuiltInTok{Thread}\NormalTok{ thread1 = }\KeywordTok{new} \BuiltInTok{Thread}\NormalTok{(() -> \{}
-    \BuiltInTok{Thread}\NormalTok{.}\FunctionTok{currentThread}\NormalTok{().}\FunctionTok{setPriority}\NormalTok{(MAX_PRIORITY);}
-\NormalTok{    cdl.}\FunctionTok{countDown}\NormalTok{();}
-    \KeywordTok{try}\NormalTok{ \{}
-\NormalTok{        cdl.}\FunctionTok{await}\NormalTok{();}
-\NormalTok{    \} }\KeywordTok{catch}\NormalTok{ (}\DataTypeTok{final} \BuiltInTok{InterruptedException}\NormalTok{ e) \{}
-\NormalTok{        e.}\FunctionTok{printStackTrace}\NormalTok{();}
-\NormalTok{    \}}
-    \DataTypeTok{int}\NormalTok{ count = }\DecValTok{0}\NormalTok{;}
+\begin{itemize}
+\tightlist
+\item
+  {Source Mac Address}\\
+\item
+  {Destination Mac Address}\\
+\item
+  {Ether Type / Payload length =\textgreater{} 0800 = IPv4}
+\item
+  {Payload}
+\item
+  {CRC}
+\end{itemize}
 
-    \KeywordTok{while}\NormalTok{ (!S9Esercizio1.}\FunctionTok{finished}\NormalTok{) \{}
-\NormalTok{        S9Esercizio1.}\FunctionTok{cnt}\NormalTok{ = ++count;}
-        \BuiltInTok{System}\NormalTok{.}\FunctionTok{out}\NormalTok{.}\FunctionTok{println}\NormalTok{(}\StringTok{"sum "}\NormalTok{ + S9Esercizio1.}\FunctionTok{sum}\NormalTok{);}
-\NormalTok{    \}}
-\NormalTok{\});}
+    \hypertarget{payload-analysis}{%
+\subsubsection{Payload Analysis}\label{payload-analysis}}
 
-\DataTypeTok{final} \BuiltInTok{Thread}\NormalTok{ thread2 = }\KeywordTok{new} \BuiltInTok{Thread}\NormalTok{(() -> \{}
-\NormalTok{    cdl.}\FunctionTok{countDown}\NormalTok{();}
-    \KeywordTok{try}\NormalTok{ \{}
-\NormalTok{        cdl.}\FunctionTok{await}\NormalTok{();}
-\NormalTok{    \} }\KeywordTok{catch}\NormalTok{ (}\DataTypeTok{final} \BuiltInTok{InterruptedException}\NormalTok{ e) \{}
-\NormalTok{        e.}\FunctionTok{printStackTrace}\NormalTok{();}
-\NormalTok{    \}}
-    \BuiltInTok{Thread}\NormalTok{.}\FunctionTok{currentThread}\NormalTok{().}\FunctionTok{setPriority}\NormalTok{(}\BuiltInTok{Thread}\NormalTok{.}\FunctionTok{MIN_PRIORITY}\NormalTok{);}
-    \KeywordTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{1}\NormalTok{; i <= }\DecValTok{50000}\NormalTok{; i++) \{}
-\NormalTok{        S9Esercizio1.}\FunctionTok{sum}\NormalTok{ = i;}
-\NormalTok{    \}}
-    \BuiltInTok{Thread}\NormalTok{.}\FunctionTok{currentThread}\NormalTok{().}\FunctionTok{setPriority}\NormalTok{(MAX_PRIORITY);}
-\NormalTok{    S9Esercizio1.}\FunctionTok{finished}\NormalTok{ = }\KeywordTok{true}\NormalTok{;}
-    \BuiltInTok{System}\NormalTok{.}\FunctionTok{out}\NormalTok{.}\FunctionTok{println}\NormalTok{(}\StringTok{"cnt "}\NormalTok{ + S9Esercizio1.}\FunctionTok{cnt}\NormalTok{);}
-\NormalTok{\});}
-\end{Highlighting}
-\end{Shaded}
+    {4}{5} {00} {00 28}\\
+{01 17} {40 00}\\
+{7e} {06} {c0 84}\\
+{c0 a8 02 03}\\
+{3f fb 38 8e}\\
+{05 2b 00 50\\
+00 03 24 d6\\
+85 e3 8c 4e\\
+50 10 22 38\\
+15 e2 00 00\\
+55 53 }
 
-    \hypertarget{esercizio-2}{%
-\subsection{Esercizio 2}\label{esercizio-2}}
+\hypertarget{analisi}{%
+\paragraph{\texorpdfstring{\href{https://en.wikipedia.org/wiki/IPv4\#Header}{Analisi}}{Analisi}}\label{analisi}}
 
-    La soluzione è molto semplice: per evitare problemi di deadlock basta
-acquisire i lock in maniera sequenziale e consistente in tutti i
-Thread.\\
-Di conseguenza, con una sola linea di codice (un sort dei depositi) è
-possibile risolvere il problema di deadlock.
+\begin{itemize}
+\tightlist
+\item
+  {Version}
+\item
+  {IHL - Header length (=5)}
+\item
+  {ToS / DSCP (6 bit) + ECN (2 bit)}
+\item
+  {Total Length}
+\item
+  {Identification}
+\item
+  {Flags (3 bit) + Fragment Offset (13 bit)}
+\item
+  {TTL (=126)}
+\item
+  {Protocol (0x06 = TCP) }
+\item
+  {Header Checksum}
+\item
+  {Source IP Address (192.168.2.3)}
+\item
+  {Destination IP Address (63.251.56.142)}
+\item
+  {Data (because IHL \textless{}= 5)}
+\end{itemize}
 
-Nella mia versione di codice ho anche sostituito i synchronized blocks
-con dei locks, per motivi di performance ed estetici (codice a cascata).
+\hypertarget{verifica-della-checksum}{%
+\subparagraph{Verifica della checksum}\label{verifica-della-checksum}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{    depots.}\FunctionTok{sort}\NormalTok{((a,b) -> (a.}\FunctionTok{getId}\NormalTok{() <= b.}\FunctionTok{getId}\NormalTok{()? }\DecValTok{-1}\NormalTok{ : }\DecValTok{1}\NormalTok{));}
-\end{Highlighting}
-\end{Shaded}
+4500 + 0028 + 0117 + 4000 + 7e06 + c084 + c0a8 + 0203 + 3ffb + 388e =\\
+2FFFD =\\
+FFFD + 2 = FFFF ✓
+
+    \hypertarget{tcp-data-analysis}{%
+\paragraph{\texorpdfstring{\href{https://en.wikipedia.org/wiki/Transmission_Control_Protocol\#TCP_segment_structure}{TCP
+Data Analysis}}{TCP Data Analysis}}\label{tcp-data-analysis}}
+
+    {05 2b} {00 50}\\
+{00 03 24 d6}\\
+{85 e3 8c 4e}\\
+50 10 22 38\\
+15 e2 00 00\\
+55 53
+
+Analisi:\\
+- {Source Port}\\
+- {Destination Port} - {Sequence Number} - {ACK Number}
 
 
     % Add a bibliography block to the postdoc
